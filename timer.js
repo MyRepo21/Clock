@@ -1,22 +1,81 @@
-function getDateTime() {
-    var today = new Date();
-    var seconds = today.getSeconds();
-    var minutes = today.getMinutes();
-    var hours = today.getHours();
-    var dd = today.getDate();
-    var day = today.getDay();
-    var mm = today.getMonth();
-    var yyyy = today.getFullYear();
-    var time = (hours + ":" + minutes + ":" + seconds);
+/* Digital Clock App
 
-const monthsOfYr = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']; 
+*/
+function getDate() {
+  const monthsOfYr = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
 
-const daysOfWk = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const daysOfWk = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+  ];
 
-console.log(time + " " + " " + daysOfWk[day] + ", " + monthsOfYr[mm] + " " + dd + " " + yyyy);
+ var today = new Date();
+ var dd = today.getDate();
+ var day = today.getDay();
+ var mm = today.getMonth();
+ var yyyy = today.getFullYear();
+ var ddSuffix;
   
-//console.log(time);
-//console.log(daysOfWk[day] + ", " + monthsOfYr[mm] + " " + dd + " " + yyyy);
-}
+//Add suffix to day of month (dd)
+//indep fcns pref?
+ 
+  if (dd % 10 == 1 && dd != 11) {
+    ddSuffix = "st";
+  } else if (dd % 10 == 2 && dd != 12) {
+    ddSuffix = "nd";
+  } else if (dd % 10 == 3 && dd != 13) {
+    ddSuffix = "rd";
+  } else ddSuffix = "th";
 
-setInterval(getDateTime, 1000);
+  var date = daysOfWk[day] + ", " + monthsOfYr[mm] + " " + dd + ddSuffix + " " + yyyy;
+  
+  document.getElementById("date").innerHTML = date;
+  
+} //End getDate()
+
+function getTime() {
+  var today = new Date();
+  var seconds = today.getSeconds();
+  var minutes = today.getMinutes();
+  var hours = today.getHours();
+
+  //Format seconds, minutes to double dig leading zero
+  if (seconds < 10) {
+    seconds = "0" + seconds;
+  }
+  if (minutes < 10) {
+    minutes = "0" + minutes;
+  }
+
+  //AM or PM
+
+  if (hours == 12) {
+    time = hours + ":" + minutes + ":" + seconds + " PM";
+  } else if (12 < hours < 24) {
+    time = (hours % 12) + ":" + minutes + ":" + seconds + " PM";
+  } else {
+    time = (hours % 12) + ":" + minutes + ":" + seconds + " AM";
+  }
+
+  document.getElementById("time").innerHTML = time;
+}
+setInterval(getTime, 1000);
+setInterval(getDate, 1000);
